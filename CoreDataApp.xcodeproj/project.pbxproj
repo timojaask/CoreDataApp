@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F17540C1EF0D130000F59C6 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F17540B1EF0D130000F59C6 /* Api.swift */; };
+		2F17540C1EF0D130000F59C6 /* EntitySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F17540B1EF0D130000F59C6 /* EntitySync.swift */; };
 		2F5F120F1EF211FB00E8F48E /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5F120D1EF211FB00E8F48E /* MasterViewController.swift */; };
 		2F5F12101EF211FB00E8F48E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5F120E1EF211FB00E8F48E /* DetailViewController.swift */; };
 		2F7B3C651EF2578B0036592E /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F7B3C641EF2578B0036592E /* HeaderView.xib */; };
@@ -29,7 +29,7 @@
 		0B76821D08EE637CE5B8FB6C /* Pods-CoreDataApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataApp/Pods-CoreDataApp.release.xcconfig"; sourceTree = "<group>"; };
 		1DF8D893558F572652E34685 /* Pods-CoreDataTest3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataTest3.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataTest3/Pods-CoreDataTest3.release.xcconfig"; sourceTree = "<group>"; };
 		2114A8931A31D0A36889FF2C /* Pods-CoreDataApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataApp/Pods-CoreDataApp.debug.xcconfig"; sourceTree = "<group>"; };
-		2F17540B1EF0D130000F59C6 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		2F17540B1EF0D130000F59C6 /* EntitySync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitySync.swift; sourceTree = "<group>"; };
 		2F5F120D1EF211FB00E8F48E /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		2F5F120E1EF211FB00E8F48E /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2F7B3C641EF2578B0036592E /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 				2F8D5FE71EF3B71500129E5C /* FirstSyncViewController.swift */,
 				2F5F120D1EF211FB00E8F48E /* MasterViewController.swift */,
 				2F5F120E1EF211FB00E8F48E /* DetailViewController.swift */,
-				2F17540B1EF0D130000F59C6 /* Api.swift */,
+				2F17540B1EF0D130000F59C6 /* EntitySync.swift */,
 				2F8D5FF21EF3CF3200129E5C /* Model.swift */,
 				2FACB8CA1EF0CFD8005EC267 /* Main.storyboard */,
 				2FACB8CF1EF0CFD8005EC267 /* LaunchScreen.storyboard */,
@@ -261,7 +261,7 @@
 				2F8D5FEA1EF3CBD700129E5C /* PhotoCell.swift in Sources */,
 				2F5F120F1EF211FB00E8F48E /* MasterViewController.swift in Sources */,
 				2F8D5FB81EF39F2F00129E5C /* CoreDataApp.xcdatamodeld in Sources */,
-				2F17540C1EF0D130000F59C6 /* Api.swift in Sources */,
+				2F17540C1EF0D130000F59C6 /* EntitySync.swift in Sources */,
 				2F5F12101EF211FB00E8F48E /* DetailViewController.swift in Sources */,
 				2FACB8C21EF0CFD8005EC267 /* AppDelegate.swift in Sources */,
 				2F8D5FE81EF3B71500129E5C /* FirstSyncViewController.swift in Sources */,
