@@ -1,67 +1,59 @@
 import Foundation
 import Sync
+import Alamofire
+import PromiseKit
 
 let baseUrl = "https://jsonplaceholder.typicode.com"
 
 typealias JsonData = [[String: Any]]
-typealias EntityFetchInfo = (name: String, endpoint: String)
 
-func fetchAllData(completion: @escaping ()->()) {
-
-    var entitiesToFetch = [
-        (name: "User", endpoint: "users"),
-        (name: "Album", endpoint: "albums"),
-        (name: "Post", endpoint: "posts"),
-        (name: "Photo", endpoint: "photos"),
-    ]
-
-    func fetchNext() {
-        if entitiesToFetch.count == 0 {
-            completion()
-            return
-        }
-        let entity = entitiesToFetch.removeFirst()
-        fetchItems(endpoint: entity.endpoint) { (data) in
-            syncItems(data: data, entity: entity)
-        }
-
-    }
-
-    func syncItems(data: JsonData?, entity: EntityFetchInfo) {
-        guard let json = data else { return }
-
-        let dataStack = (UIApplication.shared.delegate as! AppDelegate).dataStack
-
-        dataStack.sync(json, inEntityNamed: entity.name) { error in
-            if let error = error {
-                print("SYNC ERROR: \(error.localizedDescription)")
-                return
-            }
-            print("synced \(entity.endpoint)")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                fetchNext()
-            }
-        }
-    }
-
-    fetchNext()
+struct Entity {
+    let name: String
+    let endpoint: String
+    var url: String { return "\(baseUrl)/\(endpoint)" }
 }
 
-func fetchItems(endpoint: String, completion: @escaping (_ json: JsonData?) -> ()) {
-    let url = URL(string: "\(baseUrl)/\(endpoint)")!
-    URLSession.shared.dataTask(with: url) { (data, response, error) in
-        guard let data = data else {
-            completion(nil)
-            return
+struct Entities {
+    static let Users = Entity(name: "User", endpoint: "users")
+    static let Albums = Entity(name: "Album", endpoint: "albums")
+    static let Posts = Entity(name: "Post", endpoint: "posts")
+    static let Photos = Entity(name: "Photo", endpoint: "photos")
+}
+
+enum ApiError: Error {
+    case JsonParsingError
+}
+
+func fetch(_ entity: Entity) -> Promise<JsonData> {
+    return Alamofire
+        .request(entity.url)
+        .responseJSON()
+        .then { json -> JsonData in
+            guard let jsonData = json as? JsonData else {
+                throw ApiError.JsonParsingError
+            }
+            return jsonData
+    }
+}
+
+func save(_ entity: Entity, jsonData: JsonData) -> Promise<Void> {
+    return Promise { fullfill, reject in
+        let dataStack = (UIApplication.shared.delegate as! AppDelegate).dataStack
+        dataStack.sync(jsonData, inEntityNamed: entity.name) { error in
+            if let error = error { return reject(error) }
+            return fullfill()
         }
-        guard let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) else {
-            completion(nil)
-            return
-        }
-        guard let json = jsonData as? JsonData else {
-            completion(nil)
-            return
-        }
-        completion(json)
-    }.resume()
+    }
+}
+
+func sync(_ entity: Entity) -> Promise<Void> {
+    return fetch(entity)
+        .then { save(entity, jsonData: $0) }
+}
+
+func syncAll() -> Promise<Void> {
+    return sync(Entities.Users)
+        .then { sync(Entities.Albums) }
+        .then { sync(Entities.Posts) }
+        .then { sync(Entities.Photos) }
 }

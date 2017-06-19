@@ -19,14 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        fetchAllData {
-            if self.window?.rootViewController is FirstSyncViewController {
-                self.instantiateMainViewController()
-            }
-        }
+        syncAll()
+            .then { self.instantiateMainViewController() }
+            .catch { self.handleSyncError($0) }
     }
 
     func instantiateMainViewController() {
+        guard self.window?.rootViewController is FirstSyncViewController else {
+            return
+        }
         let splitViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SplitViewController") as! UISplitViewController
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController
@@ -36,6 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func instantiateFirstSyncViewController() {
         window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FirstSyncViewController")
+    }
+
+    func handleSyncError(_ error: Error) {
+        print("Failed to sync entities. Error: \(error.localizedDescription)")
     }
 
     func hasCachedPosts() -> Bool {
